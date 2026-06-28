@@ -1,30 +1,32 @@
 local cmp = require("cmp")
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 local luasnip = require("luasnip")
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
 
-    mapping = cmp.mapping.preset.insert({
-        ["<C-Space>"] = cmp.mapping.complete(),
+	mapping = cmp.mapping.preset.insert({
+		["<C-Space>"] = cmp.mapping.complete(),
 
-        ["<CR>"] = cmp.mapping.confirm({
-            select = true,
-        }),
+		["<CR>"] = cmp.mapping.confirm({
+			select = true,
+		}),
 
-        ["<Tab>"] = cmp.mapping.select_next_item(),
+		["<Tab>"] = cmp.mapping.select_next_item(),
 
-        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-    }),
+		["<S-Tab>"] = cmp.mapping.select_prev_item(),
+	}),
 
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-    },
+	sources = {
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+	},
 })
 
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

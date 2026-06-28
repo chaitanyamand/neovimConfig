@@ -12,3 +12,6 @@ keymap.set("n", "<leader>f", function()
 		lsp_fallback = true,
 	})
 end)
+keymap.set("n", "<leader>re", ":Neotree reveal<CR>", {
+	desc = "Reveal current file",
+})
